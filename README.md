@@ -22,4 +22,4 @@ Este es el repositorio del sistema de escritorio para la gestión de ventas e in
 3. Usar la opción de importar desde proyectos Maven existentes y ubicar la carpeta raíz del proyecto.
 6. Esperar a que Maven descargue las dependencias necesarias.
 7. Buscar el archivo /src/main/resources/db.properties.example y seguir los pasos de conexión con la base de datos.
-8. Ejecutar el proyecto. La primera vez pedirá crear un usuario y contraseña para el primer administrador.
+8. Ejecutar el proyecto desde /src/main/java/com/smartmarket/Main.java. La primera vez pedirá crear un usuario y contraseña para el primer administrador.
