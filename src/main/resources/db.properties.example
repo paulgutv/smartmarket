@@ -1,0 +1,4 @@
+# Copiar este archivo como db.properties en esta misma carpeta y completar datos de acceso a mysql
+db.url=jdbc:mysql://localhost:3306/smartmarket?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=America/Lima
+db.user=
+db.password=

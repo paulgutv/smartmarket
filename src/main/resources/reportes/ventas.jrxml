@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="ventas" pageWidth="595" pageHeight="842" columnWidth="515"
+              leftMargin="40" rightMargin="40" topMargin="40" bottomMargin="40"
+              whenNoDataType="AllSectionsNoDetail"
+              isSummaryWithPageHeaderAndFooter="true">
+
+    <style name="Base" isDefault="true" fontName="DejaVu Sans" fontSize="9"/>
+    <style name="Fila" mode="Opaque" backcolor="#FFFFFF">
+        <conditionalStyle>
+            <conditionExpression><![CDATA[$V{REPORT_COUNT} % 2 == 0]]></conditionExpression>
+            <style mode="Opaque" backcolor="#F2F5F9"/>
+        </conditionalStyle>
+    </style>
+
+    <parameter name="NEGOCIO" class="java.lang.String"/>
+    <parameter name="GENERADO_POR" class="java.lang.String"/>
+    <parameter name="FECHA_GENERACION" class="java.lang.String"/>
+    <parameter name="PERIODO" class="java.lang.String"/>
+
+    <field name="idVenta" class="java.lang.Integer"/>
+    <field name="fecha" class="java.sql.Timestamp"/>
+    <field name="vendedor" class="java.lang.String"/>
+    <field name="unidades" class="java.lang.Integer"/>
+    <field name="total" class="java.math.BigDecimal"/>
+
+    <variable name="TOTAL_VENTAS" class="java.math.BigDecimal" calculation="Sum">
+        <variableExpression><![CDATA[$F{total}]]></variableExpression>
+        <initialValueExpression><![CDATA[java.math.BigDecimal.ZERO]]></initialValueExpression>
+    </variable>
+    <variable name="TOTAL_UNIDADES" class="java.lang.Integer" calculation="Sum">
+        <variableExpression><![CDATA[$F{unidades}]]></variableExpression>
+        <initialValueExpression><![CDATA[Integer.valueOf(0)]]></initialValueExpression>
+    </variable>
+
+    <title>
+        <band height="92">
+            <textField>
+                <reportElement x="0" y="0" width="515" height="26"/>
+                <textElement><font size="18" isBold="true"/></textElement>
+                <textFieldExpression><![CDATA[$P{NEGOCIO}]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement x="0" y="28" width="515" height="22"/>
+                <textElement><font size="14" isBold="true"/></textElement>
+                <text><![CDATA[Reporte de ventas]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="0" y="52" width="515" height="15" forecolor="#4B5563"/>
+                <textFieldExpression><![CDATA[$P{PERIODO}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="0" y="68" width="515" height="14" forecolor="#6B7280"/>
+                <textElement><font size="8"/></textElement>
+                <textFieldExpression><![CDATA["Generado por: " + $P{GENERADO_POR} + "   |   " + $P{FECHA_GENERACION}]]></textFieldExpression>
+            </textField>
+            <line>
+                <reportElement x="0" y="88" width="515" height="1" forecolor="#1F4E79"/>
+            </line>
+        </band>
+    </title>
+
+    <columnHeader>
+        <band height="24">
+            <staticText>
+                <reportElement mode="Opaque" x="0" y="2" width="70" height="20" forecolor="#FFFFFF" backcolor="#1F4E79"/>
+                <textElement verticalAlignment="Middle"><font isBold="true"/></textElement>
+                <text><![CDATA[ N° venta]]></text>
+            </staticText>
+            <staticText>
+                <reportElement mode="Opaque" x="70" y="2" width="120" height="20" forecolor="#FFFFFF" backcolor="#1F4E79"/>
+                <textElement verticalAlignment="Middle"><font isBold="true"/></textElement>
+                <text><![CDATA[Fecha y hora]]></text>
+            </staticText>
+            <staticText>
+                <reportElement mode="Opaque" x="190" y="2" width="175" height="20" forecolor="#FFFFFF" backcolor="#1F4E79"/>
+                <textElement verticalAlignment="Middle"><font isBold="true"/></textElement>
+                <text><![CDATA[Vendedor]]></text>
+            </staticText>
+            <staticText>
+                <reportElement mode="Opaque" x="365" y="2" width="60" height="20" forecolor="#FFFFFF" backcolor="#1F4E79"/>
+                <textElement textAlignment="Right" verticalAlignment="Middle"><font isBold="true"/></textElement>
+                <text><![CDATA[Unidades]]></text>
+            </staticText>
+            <staticText>
+                <reportElement mode="Opaque" x="425" y="2" width="90" height="20" forecolor="#FFFFFF" backcolor="#1F4E79"/>
+                <textElement textAlignment="Right" verticalAlignment="Middle"><font isBold="true"/></textElement>
+                <text><![CDATA[Total (S/) ]]></text>
+            </staticText>
+        </band>
+    </columnHeader>
+
+    <detail>
+        <band height="20">
+            <textField>
+                <reportElement style="Fila" mode="Opaque" x="0" y="0" width="70" height="20"/>
+                <textElement verticalAlignment="Middle"/>
+                <textFieldExpression><![CDATA[" " + $F{idVenta}]]></textFieldExpression>
+            </textField>
+            <textField pattern="dd/MM/yyyy HH:mm">
+                <reportElement style="Fila" mode="Opaque" x="70" y="0" width="120" height="20"/>
+                <textElement verticalAlignment="Middle"/>
+                <textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
+            </textField>
+            <textField textAdjust="StretchHeight">
+                <reportElement style="Fila" mode="Opaque" stretchType="RelativeToTallestObject" x="190" y="0" width="175" height="20"/>
+                <textElement verticalAlignment="Middle"/>
+                <textFieldExpression><![CDATA[$F{vendedor}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement style="Fila" mode="Opaque" stretchType="RelativeToTallestObject" x="365" y="0" width="60" height="20"/>
+                <textElement textAlignment="Right" verticalAlignment="Middle"/>
+                <textFieldExpression><![CDATA[$F{unidades}]]></textFieldExpression>
+            </textField>
+            <textField pattern="#,##0.00">
+                <reportElement style="Fila" mode="Opaque" stretchType="RelativeToTallestObject" x="425" y="0" width="90" height="20"/>
+                <textElement textAlignment="Right" verticalAlignment="Middle"/>
+                <textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+
+    <pageFooter>
+        <band height="24">
+            <line>
+                <reportElement x="0" y="2" width="515" height="1" forecolor="#9CA3AF"/>
+            </line>
+            <textField>
+                <reportElement x="0" y="6" width="300" height="14" forecolor="#6B7280"/>
+                <textElement><font size="8"/></textElement>
+                <textFieldExpression><![CDATA[$P{NEGOCIO} + " - Reporte de ventas"]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="395" y="6" width="80" height="14" forecolor="#6B7280"/>
+                <textElement textAlignment="Right"><font size="8"/></textElement>
+                <textFieldExpression><![CDATA["Página " + $V{PAGE_NUMBER}]]></textFieldExpression>
+            </textField>
+            <textField evaluationTime="Report">
+                <reportElement x="475" y="6" width="40" height="14" forecolor="#6B7280"/>
+                <textElement><font size="8"/></textElement>
+                <textFieldExpression><![CDATA[" de " + $V{PAGE_NUMBER}]]></textFieldExpression>
+            </textField>
+        </band>
+    </pageFooter>
+
+    <summary>
+        <band height="104">
+            <line>
+                <reportElement x="0" y="6" width="515" height="1" forecolor="#1F4E79"/>
+            </line>
+            <staticText>
+                <reportElement x="215" y="14" width="215" height="18"/>
+                <textElement textAlignment="Right" verticalAlignment="Middle"/>
+                <text><![CDATA[Cantidad de ventas:]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="430" y="14" width="85" height="18"/>
+                <textElement textAlignment="Right" verticalAlignment="Middle"><font isBold="true"/></textElement>
+                <textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement x="215" y="32" width="215" height="18"/>
+                <textElement textAlignment="Right" verticalAlignment="Middle"/>
+                <text><![CDATA[Unidades vendidas:]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="430" y="32" width="85" height="18"/>
+                <textElement textAlignment="Right" verticalAlignment="Middle"><font isBold="true"/></textElement>
+                <textFieldExpression><![CDATA[$V{TOTAL_UNIDADES}]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement x="215" y="50" width="215" height="18"/>
+                <textElement textAlignment="Right" verticalAlignment="Middle"/>
+                <text><![CDATA[Venta promedio:]]></text>
+            </staticText>
+            <textField pattern="'S/ '#,##0.00">
+                <reportElement x="430" y="50" width="85" height="18"/>
+                <textElement textAlignment="Right" verticalAlignment="Middle"><font isBold="true"/></textElement>
+                <textFieldExpression><![CDATA[$V{REPORT_COUNT}.intValue() == 0 ? java.math.BigDecimal.ZERO : $V{TOTAL_VENTAS}.divide(java.math.BigDecimal.valueOf($V{REPORT_COUNT}.longValue()), 2, java.math.RoundingMode.HALF_UP)]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement x="165" y="72" width="265" height="22"/>
+                <textElement textAlignment="Right" verticalAlignment="Middle"><font size="11" isBold="true"/></textElement>
+                <text><![CDATA[TOTAL VENDIDO:]]></text>
+            </staticText>
+            <textField pattern="'S/ '#,##0.00">
+                <reportElement x="430" y="72" width="85" height="22"/>
+                <textElement textAlignment="Right" verticalAlignment="Middle"><font size="11" isBold="true"/></textElement>
+                <textFieldExpression><![CDATA[$V{TOTAL_VENTAS}]]></textFieldExpression>
+            </textField>
+        </band>
+    </summary>
+</jasperReport>

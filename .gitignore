@@ -1,0 +1,10 @@
+target/
+.metadata/
+.settings/
+.classpath
+.project
+bin/
+*.class
+*.log
+src/main/resources/db.properties
+Thumbs.db
